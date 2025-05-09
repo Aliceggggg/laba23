@@ -1,0 +1,26 @@
+#ifndef BIN_H
+#define BIN_H
+
+#include <iostream>
+#include <stack>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+struct TreeNode {
+    int value;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int val);
+};
+
+TreeNode* insert(TreeNode* root, int value);
+
+TreeNode* fillRandom(TreeNode* root, int size, int minVal, int maxVal);
+TreeNode* fillFromFile(TreeNode* root, const string& filename);
+TreeNode* fillFromTerminal(TreeNode* root);
+
+void inOrderTraversal(TreeNode* root);
+
+#endif
