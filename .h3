@@ -1,0 +1,30 @@
+#ifndef BIN1_H
+#define BIN1_H
+
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <fstream>
+#include <unordered_map>
+
+using namespace std;
+
+struct TreeNode {
+    int value;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int val);
+};
+
+// Функции вставки и заполнения дерева
+TreeNode* insert(TreeNode* root, int value);
+TreeNode* fillRandom(TreeNode* root, int size, int minVal, int maxVal);
+TreeNode* fillFromFile(TreeNode* root, const string& filename);
+TreeNode* fillFromTerminal(TreeNode* root);
+
+// Функции обхода и распространения пожара
+void inOrderTraversal(TreeNode* root);
+void buildParentMap(TreeNode* root, unordered_map<TreeNode*, TreeNode*>& parentMap);
+void burnTree(TreeNode* fireStart, unordered_map<TreeNode*, TreeNode*>& parentMap);
+
+#endif
