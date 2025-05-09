@@ -1,0 +1,57 @@
+#include "bin1.h"
+#include <windows.h>
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    setlocale(LC_ALL, "Russian");
+    TreeNode* root = nullptr;
+    int choice;
+
+    cout << "Выберите способ заполнения дерева:\n";
+    cout << "1 - Случайные числа\n";
+    cout << "2 - Из файла\n";
+    cout << "3 - Ввести вручную\n";
+    cin >> choice;
+
+    if (choice == 1) {
+        int size, minVal, maxVal;
+        cout << "Введите количество элементов, минимальное и максимальное значение:\n";
+        cin >> size >> minVal >> maxVal;
+        root = fillRandom(root, size, minVal, maxVal);
+    }
+    else if (choice == 2) {
+        string filename = "s1.txt";
+        root = fillFromFile(root, filename);
+    }
+    else if (choice == 3) {
+        root = fillFromTerminal(root);
+    }
+    else {
+        string filename = "s1.txt";
+        root = fillFromFile(root, filename);
+    }
+
+    cout << "Бинарное дерево в порядке левый-корень-правый:\n";
+    inOrderTraversal(root);
+    cout << endl;
+
+    unordered_map<TreeNode*, TreeNode*> parentMap;
+    buildParentMap(root, parentMap);
+
+    int fireValue;
+    cout << "Введите значение узла, с которого начинается пожар:\n";
+    cin >> fireValue;
+
+    TreeNode* fireStart = root;
+    while (fireStart and fireStart->value != fireValue) {
+        fireStart = (fireValue < fireStart->value) ? fireStart->left : fireStart->right;
+    }
+
+    if (!fireStart) {
+        cout << "Узел не найден в дереве!\n";
+        return 1;
+    }
+
+    cout << "Пожар начинается с узла: " << fireStart->value << endl;
+    burnTree(fireStart, parentMap);
+}
